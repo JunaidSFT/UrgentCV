@@ -21,7 +21,7 @@ const TableAll = (props) => {
 			{
 				Header: 'S.no',
 				accessor: 'serial',
-				sortable: true
+				sortable: true,
 
 			},
           {
@@ -70,6 +70,12 @@ const TableAll = (props) => {
 					localStorage.setItem("customerAmountWords", row.row.original.cheque_amount);
 					localStorage.setItem("customerDate", row.row.original.Date);
 					localStorage.setItem("ID", row.row.original._id);
+					if (row.row.original.cheque_status == "approved") {
+						localStorage.setItem("reasons", JSON.stringify([]));
+					}
+					else {
+						localStorage.setItem("reasons", JSON.stringify(row.row.original.decline_reason));
+					}
 				  }}
 			  >View More </Link>
                       </div>
@@ -130,8 +136,8 @@ const TableAll = (props) => {
 		<div>
 			
 			{loading ?
-			<div style = {{marginTop: '100px', marginLeft: '500px'}}>  
-			<ReactLoading width={100} type={"spinningBubbles"} color="#000" />
+			<div style = {{ position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>  
+			<ReactLoading width={100} type={"spinningBubbles"} color="#0083ca" />
 			</div> :
 			<div style = {{margin: '100px 50px 50px 50px', border: '2px solid #b4b4b4'}}>
 			<Panel theme="default" >

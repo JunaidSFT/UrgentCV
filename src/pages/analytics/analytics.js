@@ -206,8 +206,8 @@ class Analytics extends React.Component {
 		return (
 			<div>
 				{loading ?
-				<div style = {{marginTop: '100px', marginLeft: '500px'}}>  
-                <ReactLoading width={100} type={"spinningBubbles"} color="#000"/>
+				<div style = {{ position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>  
+                <ReactLoading width={100} type={"spinningBubbles"} color="#0083ca"/>
                 </div> :
 					<div className = "row" style = {{margin: '100px 30px 30px 30px', justifyContent: 'center'}}>
 						<div className = "col-4" style = {{border: '1px solid #b4b4b4', margin: '10px'}}>

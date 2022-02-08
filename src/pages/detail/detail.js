@@ -18,6 +18,7 @@ class Detail extends React.Component {
      
     componentDidMount() {
          this.fetchImageData();
+         this.handleCheckInitialReasons();
       }
 
 	constructor(props) {
@@ -39,15 +40,15 @@ class Detail extends React.Component {
             black4: true,
             black5: true,
             pendingChequeData : [],
-            decline_Reason : [],
+            decline_Reason : JSON.parse(localStorage.getItem("reasons")),
             showPopUp : false,
             redirect: false,
             renderToHome: false,
             loggedIn: localStorage.getItem("login"),
-            chequeAmountWords : '',
-            chequeAmountNumeric : '',
-            customerName : '',
-            UID : '',
+            chequeAmountWords : localStorage.getItem("customerAmountWords"),
+            chequeAmountNumeric : localStorage.getItem("customerAmount"),
+            customerName : localStorage.getItem("customerName"),
+            UID : localStorage.getItem("ID"),
         };
 
     };
@@ -90,6 +91,34 @@ class Detail extends React.Component {
         //    console.log(res)
         });
       };
+
+      handleCheckInitialReasons () {
+         var reason = JSON.parse(localStorage.getItem("reasons"));
+         reason.find(element => {
+             if (element == "signature") {
+                 console.log("found it", element);
+                 this.setState({black2: false});
+             };
+             
+             if (element == "balance") {
+                console.log("found it", element);
+                this.setState({black1: false});
+            };
+            if (element == "amount") {
+                console.log("found it", element);
+                this.setState({black3: false});
+            };
+            if (element == "date") {
+                console.log("found it", element);
+                this.setState({black4: false});
+            };
+            if (element == "image") {
+                console.log("found it", element);
+                this.setState({black5: false});
+            };
+         })
+      }
+
     onChange = (annotation) => {
         this.setState({ annotation })
     }
@@ -333,7 +362,7 @@ class Detail extends React.Component {
         const {loggedIn} = this.state;
         if (renderToHome)
         {
-            return <Redirect to='/detail'/>
+            return <Redirect to='/all'/>
         }
         else if (loggedIn == false)
         {
@@ -435,7 +464,7 @@ class Detail extends React.Component {
                                             <br></br>
                                             <div className = "row" style = {{marginLeft: 'auto', marginRight: 0, marginTop: '5px'}}>
                                                  <h5>Rupees </h5>&nbsp;&nbsp;
-                                                 <div style= {{width: '400px', height: '50px', border: '1px solid #b4b4b4'}}>
+                                                 <div style= {{width: '350px', height: '50px', border: '1px solid #b4b4b4'}}>
                                                  <input
                                                     name="textbox2"
                                                     style = {{ width:'100%', backgroundColor: '#FFF6F6',  padding: '0px', margin: '0px', height: '50px'}} 
@@ -494,7 +523,7 @@ class Detail extends React.Component {
                                                 <CardBody>
                                                     <CardText>
                                                        <div className = "text-center">
-                                                           <button className = {`${btn_class1} col-2 button-reason`} onClick={this.changeColor1.bind(this)}>
+                                                           <button className = {`${btn_class1} col-2 button-reason`} checked={true} onClick={this.changeColor1.bind(this)}>
                                                                Balance
                                                            </button>
                                                            <button className = {`${btn_class2} col-2 button-reason`} onClick={this.changeColor2.bind(this)}>

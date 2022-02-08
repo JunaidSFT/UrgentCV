@@ -76,11 +76,13 @@ class Verification extends React.Component {
           url: `http://34.125.195.139:8090/api/get/latest`,
         }).then((response) => {
             console.log(response.data);
-            const id = response.data._id;
-            const chequeid = response.data.cheque_no;
-            const name = response.data.title_rec;
-            const amount = response.data.numeric_amount;
-            const words = response.data.cheque_amount;
+            var result = response.data.status;
+            toast(result);
+            const id = response.data[0]._id;
+            const chequeid = response.data[0].cheque_no;
+            const name = response.data[0].title_rec;
+            const amount = response.data[0].numeric_amount;
+            const words = response.data[0].cheque_amount;
             localStorage.setItem("ID", id);
             localStorage.setItem("chequeId", chequeid);
             localStorage.setItem("customerName", name);
@@ -365,8 +367,8 @@ class Verification extends React.Component {
         return (
             <div>
                 {this.state.loading ?
-			<div style = {{marginTop: '100px', marginLeft: '500px'}}>  
-			<ReactLoading width={100} type={"spinningBubbles"} color="#000" />
+			<div style = {{ position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>  
+			<ReactLoading width={100} type={"spinningBubbles"} color="#0083ca" />
 			</div> :
                 <div className = "row" style = {{margin: '100px 30px 30px 30px'}}>
                     <div className = "col-6">
