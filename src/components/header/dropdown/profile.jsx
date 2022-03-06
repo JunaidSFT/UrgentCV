@@ -24,7 +24,7 @@ class DropdownProfile extends React.Component {
   
 	render() {
 		const {logOutCheck} = this.state;
-		if(logOutCheck == true)
+		if(logOutCheck === true)
 		{
 			return <Redirect to = '/login'/>
 		}

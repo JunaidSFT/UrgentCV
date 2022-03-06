@@ -4,14 +4,14 @@ import Annotation from 'react-image-annotation';
 import axios from 'axios';
 import ReactLoading from "react-loading";
 import TablePendingCheques from './pendingCheques-table';
-import { EditText, EditTextarea } from 'react-edit-text';
+import { EditText } from 'react-edit-text';
 import 'react-edit-text/dist/index.css';
 import './index.css';
 import { Redirect } from "react-router";
 import { ToastContainer, toast } from 'react-toastify';
 // Import toastify css file
 import 'react-toastify/dist/ReactToastify.css';
-import { local } from 'd3';
+
 
 axios.defaults.headers.get['Access-Control-Allow-Origin'] = '*';
 axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
@@ -54,7 +54,7 @@ class Verification extends React.Component {
     };
     arrayRemove(arr, value) { 
         return arr.filter(function(ele){ 
-            return ele != value; 
+            return ele !== value; 
         });
     }
     handleCallback = (childData) =>{
@@ -155,64 +155,78 @@ class Verification extends React.Component {
 
     changeColor1(){
         this.setState({black1: !this.state.black1})
-        if(this.state.black1 == true)
+        if(this.state.black1 === true)
         {
             this.state.decline_Reason.push("balance")
+            console.log(this.state.decline_Reason)
         }
-        else if(this.state.black1 == false && this.state.decline_Reason.includes("balance"))
+        else if(this.state.black1 === false && this.state.decline_Reason.includes("balance"))
         {
-            this.state.decline_Reason = this.arrayRemove(this.state.decline_Reason, "balance")
+            var arr = [...this.state.decline_Reason]
+            var array = this.arrayRemove(arr, "balance");
+            this.setState({decline_Reason: array},()=> console.log(this.state.decline_Reason))
         }
-        console.log(this.state.decline_Reason)
+        
     };
     changeColor2(){
         this.setState({black2: !this.state.black2})
-        if(this.state.black2 == true)
+        if(this.state.black2 === true)
         {
             this.state.decline_Reason.push("signature")
+            console.log(this.state.decline_Reason)
         }
-        else if(this.state.black2 == false && this.state.decline_Reason.includes("signature"))
+        else if(this.state.black2 === false && this.state.decline_Reason.includes("signature"))
         {
-            this.state.decline_Reason = this.arrayRemove(this.state.decline_Reason, "signature")
+            var arr = [...this.state.decline_Reason]
+            var array = this.arrayRemove(arr, "signature");
+            this.setState({decline_Reason: array},()=> console.log(this.state.decline_Reason))
         }
-        console.log(this.state.decline_Reason)
+        
     };
     changeColor3(){
         this.setState({black3: !this.state.black3})
-        if(this.state.black3 == true)
+        if(this.state.black3 === true)
         {
             this.state.decline_Reason.push("amount")
+            console.log(this.state.decline_Reason)
         }
-        else if(this.state.black3 == false && this.state.decline_Reason.includes("amount"))
+        else if(this.state.black3 === false && this.state.decline_Reason.includes("amount"))
         {
-            this.state.decline_Reason = this.arrayRemove(this.state.decline_Reason, "amount")
+            var arr = [...this.state.decline_Reason]
+            var array = this.arrayRemove(arr, "amount");
+            this.setState({decline_Reason: array},()=> console.log(this.state.decline_Reason))
         }
-        console.log(this.state.decline_Reason)
+        
     };
     changeColor4(){
         this.setState({black4: !this.state.black4})
-        if(this.state.black4 == true)
+        if(this.state.black4 === true)
         {
             this.state.decline_Reason.push("date")
+            console.log(this.state.decline_Reason)
         }
-        else if(this.state.black4 == false && this.state.decline_Reason.includes("date"))
+        else if(this.state.black4 === false && this.state.decline_Reason.includes("date"))
         {
-            this.state.decline_Reason = this.arrayRemove(this.state.decline_Reason, "date")
+            var arr = [...this.state.decline_Reason]
+            var array = this.arrayRemove(arr, "date");
+            this.setState({decline_Reason: array},()=> console.log(this.state.decline_Reason))
         }
-        console.log(this.state.decline_Reason)
+        
     };
     changeColor5(){
         this.setState({black5: !this.state.black5})
-        if(this.state.black5 == true)
+        if(this.state.black5 === true)
         {
             this.state.decline_Reason.push("image")
-        }
-        else if(this.state.black5 == false && this.state.decline_Reason.includes("image"))
-        {
-            this.state.decline_Reason = this.arrayRemove(this.state.decline_Reason, "image")
             console.log(this.state.decline_Reason)
         }
-        console.log(this.state.decline_Reason)
+        else if(this.state.black5 === false && this.state.decline_Reason.includes("image"))
+        {
+            var arr = [...this.state.decline_Reason]
+            var array = this.arrayRemove(arr, "image");
+            this.setState({decline_Reason: array},()=> console.log(this.state.decline_Reason))
+        }
+        
     };
     
     SubmitAnnotations(){
@@ -230,7 +244,7 @@ class Verification extends React.Component {
             })
     }
     Approve(){
-        if(this.state.decline_Reason.length == 0)
+        if(this.state.decline_Reason.length === 0)
         {   console.log(this.state.UID)
             axios({
                 method: "POST",
@@ -243,8 +257,7 @@ class Verification extends React.Component {
             }).then((res) =>{
                 console.log(res)
                 toast('Approved')
-                this.state.decline_Reason = []
-                this.setState({ renderToHome : true})
+                this.setState({ loading : true}, ()=> this.getLatestData());
             })
         }
         else{
@@ -268,29 +281,29 @@ class Verification extends React.Component {
             }).then((res) =>{
                 toast('Declined')
                 console.log(res)
-                this.state.decline_Reason = []
-                if(this.state.black1 == false)
+                
+                if(this.state.black1 === false)
                 {
                     this.setState({black1: !this.state.black1})
                 }
-                if(this.state.black2 == false)
+                if(this.state.black2 === false)
                 {
                     this.setState({black2: !this.state.black2})
                 }
-                if(this.state.black3 == false)
+                if(this.state.black3 === false)
                 {
                     this.setState({black3: !this.state.black3})
                 }
-                if(this.state.black4 == false)
+                if(this.state.black4 === false)
                 {
                     this.setState({black4: !this.state.black4})
                 }
-                if(this.state.black5 == false)
+                if(this.state.black5 === false)
                 {
                     this.setState({black5: !this.state.black5})
                 }
                 console.log(this.state.decline_Reason)
-                this.setState({ renderToHome : true})
+                this.setState({ loading : true}, ()=> this.getLatestData());
 
             })
         }
@@ -313,29 +326,29 @@ class Verification extends React.Component {
             }).then((res) =>{
                 toast('Hold')
                 console.log(res)
-                this.state.decline_Reason = []
-                if(this.state.black1 == false)
+                
+                if(this.state.black1 === false)
                 {
                     this.setState({black1: !this.state.black1})
                 }
-                if(this.state.black2 == false)
+                if(this.state.black2 === false)
                 {
                     this.setState({black2: !this.state.black2})
                 }
-                if(this.state.black3 == false)
+                if(this.state.black3 === false)
                 {
                     this.setState({black3: !this.state.black3})
                 }
-                if(this.state.black4 == false)
+                if(this.state.black4 === false)
                 {
                     this.setState({black4: !this.state.black4})
                 }
-                if(this.state.black5 == false)
+                if(this.state.black5 === false)
                 {
                     this.setState({black5: !this.state.black5})
                 }
                 console.log(this.state.decline_Reason)
-                this.setState({ renderToHome : true})
+                this.setState({ loading : true}, ()=> this.getLatestData());
 
             })
         }
@@ -359,7 +372,7 @@ class Verification extends React.Component {
         {
             return <Redirect to='/verification'/>
         }
-        else if (loggedIn == false)
+        else if (loggedIn === false)
         {
             return <Redirect to='/login'/>
         }

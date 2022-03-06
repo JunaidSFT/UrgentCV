@@ -1,17 +1,11 @@
 import React from 'react';
-import {Card, CardBody, CardHeader, CardText, Button} from 'reactstrap';
 import Dropzone from "react-dropzone";
 import axios from 'axios';
 import ReactLoading from "react-loading";
-// Importing toastify module
-import { ToastContainer, toast } from 'react-toastify';
-// import UploadService from "../services/upload-files.service";
-import UploadService from "../../services/upload-service";
-// Import toastify css file
-import 'react-toastify/dist/ReactToastify.css';
-toast.configure()
-axios.defaults.headers.get['Access-Control-Allow-Origin'] = '*';
-axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+import ReactNotification from "react-notifications-component";
+import { store } from "react-notifications-component";
+import "react-notifications-component/dist/theme.css";
+
 class Upload extends React.Component {
 	constructor(props) {
 		super(props);
@@ -31,8 +25,51 @@ class Upload extends React.Component {
 	        loading : false
 
         };
+        this.addNotification = this.addNotification.bind(this);
 		
     };
+
+    addNotification(
+        notificationType,
+        notificationTitle,
+        notificationMessage,
+        notificationPosition,
+        notificationContent
+      ) {
+        if (notificationContent) {
+          notificationContent = (
+            <div className="widget-list widget-list-rounded inverse-mode w-100">
+              <div className="widget-list-item">
+                <div className="widget-list-media">
+                  <img
+                    src="../assets/img/user/user-12.jpg"
+                    alt=""
+                    className="rounded"
+                  />
+                </div>
+                <div className="widget-list-content">
+                  <h4 className="widget-list-title">Christopher Struth</h4>
+                  <p className="widget-list-desc">Bank Transfer</p>
+                </div>
+              </div>
+            </div>
+          );
+        }
+        store.addNotification({
+          title: notificationTitle,
+          message: notificationMessage,
+          type: notificationType,
+          insert: "top",
+          container: notificationPosition,
+          animationIn: ["animated", "fadeIn"],
+          animationOut: ["animated", "fadeOut"],
+          dismiss: { duration: 2000 },
+          dismissable: { click: true },
+          content: notificationContent,
+        });
+      }
+
+
     componentDidMount() {
         // UploadService.getFiles().then((response) => {
         //   this.setState({
@@ -65,7 +102,12 @@ class Upload extends React.Component {
                 }
             }).then((res) =>{
                 this.setState({loading : false})
-                toast('File Uploaded')
+                this.addNotification(
+                    "success",
+                    "Success",
+                    "All your data has been successfully updated",
+                    "bottom-center"
+                  )
                 console.log(res)
                 this.state.fileInfos.push(currentFile.name)
             })
@@ -84,17 +126,17 @@ class Upload extends React.Component {
         }
     }
     render() {
-        const { selectedFiles, currentFile, progress, message, fileInfos } = this.state;
+        const { selectedFiles, currentFile, progress, message } = this.state;
         const {loading} = this.state;
 		return (
             
-			<div className = "row" style = {{margin: '300px 30px 30px 50px', justifyContent: 'center'}}>
+			<div className = "row" style = {{margin: '200px 30px 30px 50px', justifyContent: 'center'}}>
                 {loading ?
                 <div style = {{ margin: '100px 20spx 30px 200px'}}>  
                 <ReactLoading width={100} type={"spinningBubbles"} color="#000" />
                 </div> :
                 <div>
-                    <ToastContainer position='top-center'/>
+                    <ReactNotification />
                     {currentFile && (
                     <div className="progress mb-3">
                         <div

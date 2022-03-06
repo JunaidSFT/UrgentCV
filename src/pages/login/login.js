@@ -1,8 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { PageSettings } from './../../config/page-settings.js';
-import ReactSession from 'react-client-session';
-import { local } from 'd3';
 
 // ReactSession.setStoreType("localStorage");
 
@@ -21,16 +19,14 @@ class Login extends React.Component {
 	}
 	updateInputValue1(evt) {
 		const val = evt.target.value;
-		console.log(val)
-		// ...
+		
 		this.setState({
 		  username: val
 		});
 	}
 	updateInputValue2(evt) {
 		const val = evt.target.value;
-		console.log(val)
-		// ...
+		
 		this.setState({
 		  password: val
 		});
@@ -48,9 +44,8 @@ class Login extends React.Component {
 	}
 	
 	handleSubmit(event) {
-		console.log(this.state.username)
-		console.log(this.state.password)
-		if(this.state.username == "ubl" && this.state.password=="123")
+
+		if(this.state.username === "ubl" && this.state.password === "123")
 		{
 			event.preventDefault();
     		this.props.history.push('/verification');

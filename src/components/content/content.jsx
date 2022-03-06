@@ -1,10 +1,10 @@
 import React from 'react';
-import { Route, withRouter,Redirect, Switch, } from 'react-router-dom';
+import { Route, withRouter, Switch, } from 'react-router-dom';
 import routes from './../../config/page-route.jsx';
 import { PageSettings } from './../../config/page-settings.js';
-import loginPage from '../../pages/login/login.js'
 
-const isloggedIn = localStorage.getItem("login")
+
+
 function setTitle(path, routeArray) {
 	var pageTitle;
 	for (var i=0; i < routeArray.length; i++) {

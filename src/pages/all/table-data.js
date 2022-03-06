@@ -70,7 +70,7 @@ const TableAll = (props) => {
 					localStorage.setItem("customerAmountWords", row.row.original.cheque_amount);
 					localStorage.setItem("customerDate", row.row.original.Date);
 					localStorage.setItem("ID", row.row.original._id);
-					if (row.row.original.cheque_status == "approved") {
+					if (row.row.original.cheque_status === "approved") {
 						localStorage.setItem("reasons", JSON.stringify([]));
 					}
 					else {

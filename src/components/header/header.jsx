@@ -33,7 +33,7 @@ class Header extends React.Component {
 								</button>
 							)}
 							<Link to="/" className="navbar-brand"><span><img style={{marginLeft:40}} width={80} height={40}
-								src={logo}></img></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Cheque </b> Verification</Link>
+								src={logo} alt= "logo"></img></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Cheque </b> Verification</Link>
 							<div> 	
 							</div>
 							{pageHeaderMegaMenu && (

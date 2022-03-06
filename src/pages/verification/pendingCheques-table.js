@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useTable, useSortBy, usePagination } from 'react-table'
 import { Panel, PanelBody } from './../../components/panel/panel.jsx';
-import makeData from './make-data';
 import axios from "axios";
+import ReactLoading from "react-loading";
 
 
 
@@ -72,7 +72,6 @@ const TablePendingCheques = (props) => {
   	}, []);
 	useEffect(() => {
     	fetchData();
-		console.log(data)
   	}, [fetchData]);
 //   const data = React.useMemo(() => makeData(200), []);
 //   data.forEach((photo, index) => { photo.serial = index + 1; });
@@ -98,6 +97,10 @@ const TablePendingCheques = (props) => {
 	 
 	return (
 		<div>
+			{loading ?
+			<div>  
+			<ReactLoading width={50} type={"spinningBubbles"} color="#0083ca" />
+			</div> :
 			<Panel theme="default" >
 				<div class="table-responsive">
 					<table class="table" {...getTableProps()}>
@@ -178,7 +181,7 @@ const TablePendingCheques = (props) => {
 					</div>
 				</div>
 			 </PanelBody>
-			</Panel>
+			</Panel>}
 		</div>
 	)
 }

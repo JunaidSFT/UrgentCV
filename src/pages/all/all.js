@@ -1,8 +1,6 @@
 import React from 'react';
 import TableAll from './table-data';
 import {Card, CardBody, CardHeader, CardText} from 'reactstrap';
-import { Link } from 'react-router-dom';
-import PerfectScrollbar from 'react-perfect-scrollbar';
 
 import './index.scss'
 
@@ -70,12 +68,11 @@ const SidebarUI = ({ isOpen, ...rest }) => {
     render() {
       const { isOpen } = this.state
       const { hasOverlay, isLeft } = this.props
-      console.log(localStorage.getItem("login"))
       return (
         <SidebarUI isOpen={isOpen}>
           
           <TableAll parentCallback = {this.handleCallback}/>
-          <SidebarUI.Content isRight={isLeft}>
+          <SidebarUI.Content isright={isLeft}>
           <div style = {{marginTop: '80px'}}>
 				<div className = "row media media-sm media-list" style = {{paddingLeft: '10px', margin: '5px'}}>
 					<div  className=" media-left">
